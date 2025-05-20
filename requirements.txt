@@ -1,3 +1,7 @@
-fastapi
-uvicorn
 PyPDF2
+fastapi
+uvicorn[standard]
+python-multipart
+pymupdf
+langchain
+openai
