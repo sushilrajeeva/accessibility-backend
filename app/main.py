@@ -1,6 +1,7 @@
 # app/main.py
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.routes.ai_tagger import router as ai_router
 from app.core.logging import init_logging
 from app.core.config import settings
@@ -14,6 +15,16 @@ app = FastAPI(
     version=settings.VERSION,
     description=getattr(settings, "PROJECT_DESCRIPTION", None),
 )
+
+# 2.1) Enable CORS so the frontend at localhost:5173 can talk to the backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # your Vite dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 3) Mount the AI-Tagger routes under /api
 app.include_router(

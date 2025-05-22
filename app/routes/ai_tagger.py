@@ -32,7 +32,7 @@ async def ai_tag(file: UploadFile = File(...)):
         raise HTTPException(
             HTTP_400_BAD_REQUEST, detail="Only PDF files are accepted."
         )
-
+    print("pdf recieved ....")
     # 2) Read PDF bytes
     pdf_bytes = await file.read()
 
