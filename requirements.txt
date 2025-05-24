@@ -5,3 +5,5 @@ python-multipart
 pymupdf
 langchain
 openai
+langchain-openai
+pydantic-settings
