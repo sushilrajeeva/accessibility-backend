@@ -12,13 +12,13 @@ from app.core.config import settings
 # 1) Build a chat prompt template
 #    We're wrapping the content in a single-user message template.
 _CHAT_PROMPT = ChatPromptTemplate.from_template(
-    """You are an accessibility-tagging assistant.
-Assign exactly one tag from: title, h1, paragraph, image_caption, image, footer.
+        """You are an accessibility-tagging assistant.
+    Assign exactly one tag from: title, subtitle, h1, h2, h3, h4, h5, h6, paragraph, image_caption, image, header, footer.
 
-Region content:
-\"\"\"{content}\"\"\"
+    Region content (plain text):
+    \"\"\"{content}\"\"\"
 
-Respond with just the tag label."""
+    Respond with just the tag label (one of the above)."""
 )
 
 # 2) Initialize the ChatOpenAI LLM
