@@ -19,7 +19,7 @@ app = FastAPI(
 # 2.1) Enable CORS so the frontend at localhost:5173 can talk to the backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # your Vite dev server
+    allow_origins=["*"],  # your Vite dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
