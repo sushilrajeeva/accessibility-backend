@@ -9,11 +9,11 @@ from app.services.classifier  import classify_regions
 
 app = FastAPI()
 
-@app.get("/api/ping")
+@app.get("/ping")
 async def ping():
     return {"pong": "true"}
 
-@app.post("/api/ai-tag")
+@app.post("/ai-tag")
 async def ai_tag(file: UploadFile = File(...)):
     if file.content_type != "application/pdf":
         raise HTTPException(400, "Only PDF files are accepted.")
