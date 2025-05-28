@@ -12,8 +12,10 @@ from app.core.config import settings
 # 1) Build a chat prompt template
 #    We're wrapping the content in a single-user message template.
 _CHAT_PROMPT = ChatPromptTemplate.from_template(
-        """You are an accessibility-tagging assistant.
-    Assign exactly one tag from: title, subtitle, h1, h2, h3, h4, h5, h6, paragraph, image_caption, image, header, footer.
+    """You are an accessibility-tagging assistant.
+    Assign exactly one tag from: title, subtitle, h1, h2, h3, h4, h5, h6, paragraph, image_caption, image, header, footer, form_label, checkbox.
+
+    Your goal is to ensure proper document navigation and structure. Use heading tags for section headers, title for document title, and paragraph for normal body text.
 
     Region content (plain text):
     \"\"\"{content}\"\"\"
