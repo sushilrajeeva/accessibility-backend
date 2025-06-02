@@ -61,3 +61,24 @@ def extract_regions(pdf_bytes: bytes) -> List[Dict]:
 
     # Sort in reading order
     return sort_regions(regions)
+
+def extract_metadata(pdf_bytes: bytes) -> Dict[str, str]:
+    """
+    helper function: open the same PDF, read doc.metadata, normalize its keys to snake_case,
+    and return that dict. PyMuPDF’s doc.metadata may include:
+      'title', 'author', 'subject', 'keywords', 'creator', 'producer',
+      'creationDate', 'modDate', etc.
+    """
+    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+    meta = doc.metadata or {}
+    doc.close()
+
+    normalized: Dict[str, str] = {}
+    for k, v in meta.items():
+        if k == "creationDate":
+            normalized["creation_date"] = v
+        elif k == "modDate":
+            normalized["mod_date"] = v
+        else:
+            normalized[k.lower()] = v  # e.g. "title","author","subject","keywords","creator","producer"
+    return normalized
