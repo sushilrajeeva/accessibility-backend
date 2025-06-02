@@ -70,15 +70,29 @@ def extract_metadata(pdf_bytes: bytes) -> Dict[str, str]:
       'creationDate', 'modDate', etc.
     """
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-    meta = doc.metadata or {}
+    # meta = doc.metadata or {}
+    # doc.close()
+
+    # normalized: Dict[str, str] = {}
+    # for k, v in meta.items():
+    #     if k == "creationDate":
+    #         normalized["creation_date"] = v
+    #     elif k == "modDate":
+    #         normalized["mod_date"] = v
+    #     else:
+    #         normalized[k.lower()] = v  # e.g. "title","author","subject","keywords","creator","producer"
+    # return normalized
+    raw_meta = doc.metadata  # e.g. {'title': '...', 'author': '...', 'creationDate': 'D:20250519045555-07\'00\'', …}
     doc.close()
 
-    normalized: Dict[str, str] = {}
-    for k, v in meta.items():
-        if k == "creationDate":
-            normalized["creation_date"] = v
-        elif k == "modDate":
-            normalized["mod_date"] = v
-        else:
-            normalized[k.lower()] = v  # e.g. "title","author","subject","keywords","creator","producer"
-    return normalized
+    # Normalize key names to snake_case that match our Metadata model
+    return {
+        "title":          raw_meta.get("title", ""),
+        "author":         raw_meta.get("author", ""),
+        "subject":        raw_meta.get("subject", ""),
+        "keywords":       raw_meta.get("keywords", ""),
+        "creator":        raw_meta.get("creator", ""),
+        "producer":       raw_meta.get("producer", ""),
+        "creation_date":  raw_meta.get("creationDate", ""),
+        "mod_date":       raw_meta.get("modDate", ""),
+    }
