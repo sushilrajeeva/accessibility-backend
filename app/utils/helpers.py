@@ -3,6 +3,16 @@
 import base64
 from typing import List, Dict, Any
 
+# Helper to turn PyMuPDF’s color‐int into [r,g,b] floats
+def int_to_rgb(color_int: int) -> List[float]:
+    # PDF colors in PyMuPDF come as 0xRRGGBB integers
+    r = (color_int >> 16) & 0xFF
+    g = (color_int >> 8)  & 0xFF
+    b = (color_int >> 0)  & 0xFF
+    # normalize to 0.0–1.0
+    return [r / 255.0, g / 255.0, b / 255.0]
+
+
 def sort_regions(regions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
     Sort regions in “reading order”:
