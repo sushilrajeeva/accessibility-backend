@@ -6,10 +6,11 @@ FROM python:3.13-slim AS builder
 # prevent Python buffering logs
 ENV PYTHONUNBUFFERED=1
 
-# install build tools & deps
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends gcc libgl1-mesa-glx && \
-    pip install --upgrade pip
+# install build tools & deps, clean cache, upgrade pip
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends gcc libgl1-mesa-glx \
+ && rm -rf /var/lib/apt/lists/* \
+ && pip install --upgrade pip
 
 # copy requirements and install into a venv
 WORKDIR /install
@@ -36,4 +37,4 @@ EXPOSE 8000
 ENV ENV_FILE=/app/.env
 
 # uvicorn entrypoint
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

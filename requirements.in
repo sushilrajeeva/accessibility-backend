@@ -1,0 +1,10 @@
+# requirements.in
+fastapi
+uvicorn[standard]
+python-multipart
+pymupdf
+PyPDF2
+langchain
+langchain-openai
+openai
+pydantic-settings
