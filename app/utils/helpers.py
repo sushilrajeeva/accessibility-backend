@@ -44,31 +44,31 @@ def map_tag_to_role(tag: str) -> str:
     """
     return ROLE_MAP.get(tag.lower(), "P")
 
-def convert_bbox_top_to_bottom(
-    bbox: List[float], page_height: float
-) -> Tuple[Decimal, Decimal, Decimal, Decimal]:
-    """
-    MuPDF and borb both use a top-left origin for layout, so we can keep
-    the coordinates unchanged: (x0, y0, width, height).
-    """
-    x0, y0, x1, y1 = bbox
-    width  = x1 - x0
-    height = y1 - y0
-    return (Decimal(x0), Decimal(y0), Decimal(width), Decimal(height))
-
 # def convert_bbox_top_to_bottom(
 #     bbox: List[float], page_height: float
 # ) -> Tuple[Decimal, Decimal, Decimal, Decimal]:
 #     """
-#     Convert MuPDF bbox (x0, y0, x1, y1) where y0 is from top-edge downward,
-#     into borb rectangle (x, y, w, h) where y is from bottom-edge upward.
+#     MuPDF and borb both use a top-left origin for layout, so we can keep
+#     the coordinates unchanged: (x0, y0, width, height).
 #     """
 #     x0, y0, x1, y1 = bbox
 #     width  = x1 - x0
-#     height = y1 - y0                 # same in both systems
-#     # y coordinate in borb = distance from bottom of page to *bottom* of bbox
-#     y_borb = page_height - y1        # page_height minus bbox‐bottom
-#     return (Decimal(x0), Decimal(y_borb), Decimal(width), Decimal(height))
+#     height = y1 - y0
+#     return (Decimal(x0), Decimal(y0), Decimal(width), Decimal(height))
+
+def convert_bbox_top_to_bottom(
+    bbox: List[float], page_height: float
+) -> Tuple[Decimal, Decimal, Decimal, Decimal]:
+    """
+    Convert MuPDF bbox (x0, y0, x1, y1) where y0 is from top-edge downward,
+    into borb rectangle (x, y, w, h) where y is from bottom-edge upward.
+    """
+    x0, y0, x1, y1 = bbox
+    width  = x1 - x0
+    height = y1 - y0                 # same in both systems
+    # y coordinate in borb = distance from bottom of page to *bottom* of bbox
+    y_borb = page_height - y1        # page_height minus bbox‐bottom
+    return (Decimal(x0), Decimal(y_borb), Decimal(width), Decimal(height))
 
 
 def _assign_role(layout_obj, role_str: str) -> None:

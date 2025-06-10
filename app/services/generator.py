@@ -161,6 +161,8 @@ def generate_pdf_from_json(data: Dict[str, Any]) -> bytes:
 
             # add small safety margin so text always fits
             h += Decimal(4)          # 4 pt ≈ 1.4 mm
+            # # guarantee enough height
+            # h = max(h, page_h - y)     # stretch down to bottom if needed
 
             
             para.paint(page, Rectangle(x, y, w, h))
