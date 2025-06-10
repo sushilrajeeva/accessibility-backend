@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.ai_tagger import router as ai_router
+from app.routes.pdf_generator import router as pdf_router
 from app.core.logging import init_logging
 from app.core.config import settings
 
@@ -32,6 +33,9 @@ app.include_router(
     prefix="/api",
     tags=["AI Tagger"]
 )
+
+# 4) Mount PDF-generator routes
+app.include_router(pdf_router, prefix="/api", tags=["PDF Generator"])
 
 # (Optional) You could add a root health check here as well:
 @app.get("/", summary="Root health check")
