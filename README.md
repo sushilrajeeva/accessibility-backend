@@ -1,14 +1,40 @@
-# Accessibility-Backend
+# AskPDF-AI: PDF Intelligence & Accessibility Platform
 
-## Overview
+## Main Repository: [Click here for AskPDF Backend Codebase](https://github.com/sushilrajeeva/AskPDF-AI_Backend)
 
-**Accessibility-Backend** is a FastAPI service that powers an AI-driven PDF accessibility tagging prototype. It accepts PDF uploads, extracts text/image regions via PyMuPDF, invokes an LLM (through LangChain/OpenAI) to assign accessibility tags (e.g., `title`, `h1`, `paragraph`, `image`, etc.), and returns a structured JSON representation of the tagged document along with basic PDF metadata (author, creation date, etc.).  
+AskPDF-AI is a comprehensive Generative AI-powered platform that combines intelligent PDF interaction with accessibility conversion capabilities. This advanced application allows users to not only ask questions about PDF content using Retrieval-Augmented Generation (RAG) but also transform PDFs into accessible formats that comply with accessibility standards.
+The platform is built using FastAPI backend architecture with React frontend, containerized using Docker, and deployed using AWS Fargate with a fully automated CI/CD pipeline.
 
-This backend is intended to be paired with a frontend (e.g., React/Vite) that uploads a PDF, displays a loading indicator while the AI processes, and then renders the returned JSON structure to the user.  
+## Current Repository: 
+This repository converts PDFs into accessible PDFs. For the RAG and AI PDF chatbot, please click on the [main repository](https://github.com/sushilrajeeva/AskPDF-AI_Backend)
+
+## **How It Works**
+
+![AskPDF-AI](https://github.com/sushilrajeeva/AskPDF-AI_Backend/blob/main/docs/PDF-LangChain.jpg)
+
+## Background & Overview
+
+**AskPDF AI - Core Intelligence Engine**
+The primary functionality of AskPDF-AI is a RAG (Retrieval-Augmented Generation) application that processes PDF documents and provides accurate answers to questions based on the content within the PDFs. Users can upload multiple PDFs, and the AI system creates a knowledge base that can be queried through natural language questions.
+
+**PDF Accessibility Converter** Building on the core functionality, this platform now includes PDF accessibility conversion. It is a subset of the work I did at `U.S. Digital Response`, where I built an AI solution for the `Maryland State Department of Education (MSDE)` to convert PDFs into accessible formats using LLMs. The goal is to make digital content more accessible. The accessibility module accepts PDF uploads, extracts `text` and `image` regions via `PyMuPDF`, invokes an `LLM` (through `LangChain`/`OpenAI`) to assign accessibility tags (e.g., `title`, `h1`, `paragraph`, `image`), and returns a structured JSON representation of the tagged document along with basic PDF metadata (author, creation date, etc.). Users can then review the AI-generated tags and generate an accessible PDF.  
+
+**Note:** I am merging both projects into one cohesive platform as it creates a more natural user experience. The accessibility feature represents a subset of the larger project I developed during my time at `U.S. Digital Response`. The current implementation supports limited PDF formats, primarily those with standard formatting structures.
+
+This backend is intended to be paired with a frontend (I have used `React` + `Vite`) and the [AskPDF backend](https://github.com/sushilrajeeva/AskPDF-AI_Backend) that uploads a PDF, displays a loading indicator while the AI processes, and then renders the returned JSON structure to the user.  
 
 ---
 
-## Features
+## AskPDF Intelligence Engine Features
+The LangChain-based backend follows these steps to provide responses to your questions:
+
+- **PDF Loading:** The app reads multiple PDF documents and extracts their text content.
+- **Text Chunking:** The extracted text is divided into smaller, manageable chunks.
+- **Vector Embeddings:** The application generates vector representations (embeddings) for the text chunks.
+- **Similarity Matching:** When you ask a question, the app compares it with the text chunks and identifies the most semantically similar ones.
+- **Response Generation:** The relevant text chunks are passed to a language model to generate an accurate response.
+
+## Accessibility Features
 
 - **PDF Parsing & Region Extraction**  
   - Uses [PyMuPDF](https://pymupdf.readthedocs.io/) (`fitz`) to parse each page into “regions” (text blocks and embedded images).  
@@ -38,11 +64,34 @@ This backend is intended to be paired with a frontend (e.g., React/Vite) that up
 
 - **Python 3.11+**  
 - **pip** (Python package installer)  
-- **git** (for cloning the repository)  
+- **git** (for cloning the repository)
+
+## Tech Stack
+**Backend Technologies**
+ - FastAPI → Modern, high-performance web framework for Python
+ - LangChain → Framework for building LLM-powered applications
+ - OpenAI API → Used for embeddings, language modeling, and accessibility tagging
+ - FAISS → Vector database for efficient similarity searches
+ - PyMuPDF → PDF parsing and region extraction
+ - PostgreSQL → Database for storing user and document data
+ - Redis → Caching system to optimize performance
+
+**Frontend Technologies**
+ - React.js → Modern JavaScript library for building user interfaces
+ - Vite → Fast build tool and development server
+ - Modern UI Components → Responsive design with file upload and chat interfaces
+
+**Infrastructure & DevOps**
+ - Docker → Containerization for consistent deployment
+ - AWS Fargate → Serverless container deployment
+ - GitHub Actions → Automated CI/CD pipeline
+ - Terraform → Infrastructure as code
 
 ---
 
 ## Installation & Setup
+
+For AskPDF AI backend installation and setup, follow the installation link [link](https://github.com/sushilrajeeva/AskPDF-AI_Backend?tab=readme-ov-file#-installation-and-setup)
 
 1. **Clone the Repository**  
    ```bash
@@ -198,6 +247,72 @@ accessibility-backend/
 ├── requirements.txt            # Python dependencies
 └── Dockerfile                  # Multi-stage build for production
 ```
-5. 
 
-6. 
+---
+
+## **🔧 Usage Examples**
+
+### **AskPDF Intelligence**
+1. Upload your PDF documents
+2. Wait for processing and vector embedding generation
+3. Ask questions like:
+   - "What are the main conclusions in this research paper?"
+   - "Summarize the financial results from Q3"
+   - "What methodology was used in this study?"
+
+### **PDF Accessibility Conversion**
+1. Upload a PDF file to the `/api/ai-tag` endpoint
+2. Receive structured JSON with:
+   - Semantic tags for all content regions
+   - Proper heading hierarchy
+   - Image descriptions and captions
+   - Document metadata
+
+---
+
+## **🚀 CI/CD Pipeline**
+
+### **Continuous Integration**
+- Automated builds on every push to main branch
+- Docker images built and pushed to DockerHub
+- Automated testing and code quality checks
+
+### **Continuous Deployment**
+- Zero-downtime deployments using AWS Fargate
+- Automatic scaling based on demand
+- Health checks and rollback capabilities
+
+---
+
+## **🎯 Use Cases**
+
+- **Educational Institutions**: Make course materials accessible while enabling AI-powered study assistance
+- **Corporate Training**: Convert training documents and provide intelligent Q&A capabilities
+- **Legal & Compliance**: Ensure document accessibility while enabling quick information retrieval
+- **Research & Academia**: Process research papers for both accessibility and intelligent analysis
+- **Government Agencies**: Transform public documents for accessibility compliance
+- **Healthcare**: Make medical documents accessible and searchable
+
+---
+
+## **Frontend Repositories**
+
+For the complete frontend setup and deployment instructions, visit:
+
+👉 **[1. AskPDF-AI Frontend Repository](https://github.com/sushilrajeeva/askpdf-frontend)**
+
+👉 **[1. Accessibility-UI Frontend Repository](https://github.com/sushilrajeeva/accessible-pdf-ui)**
+
+---
+
+## **🤝 Contributing**
+
+I welcome contributions to improve both the intelligence and accessibility features of this platform. Please feel free to submit issues and pull requests.
+
+---
+
+## **📜 License**
+
+The Accessibility and AskPDF platform is released under the [MIT License](https://opensource.org/licenses/MIT).
+
+---
